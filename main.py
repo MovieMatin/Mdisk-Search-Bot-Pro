@@ -110,7 +110,7 @@ async def message_handler(event):
 
                 f_text = await link_to_hyperlink(f_text)
                 answer += (
-                    f"\n\n\n✅ PAGE {c}:\n\n━━━━━━━━━\n\n"
+                    f"\n\n\n✅ PAGE {c}:\n\n━━━━━━━━━━━━━━━━━━\n\n"
                     + ""
                     + f_text.split("\n", 1)[0]
                     + ""
@@ -133,7 +133,7 @@ Request Your Movie By Clicking Below Button and Movie Will Be Uploaded Soon 😊
 
             newbutton = (
                 [
-                    [Button.url("Request Movie", "https://t.me/+VYtz2cF16iVmY2Fl")],
+                    [Button.url("Request Movie⚡️", "https://t.me/+VYtz2cF16iVmY2Fl")],
                 ],
             )
             await txt.delete()
@@ -156,10 +156,10 @@ Request Your Movie By Clicking Below Button and Movie Will Be Uploaded Soon 😊
         markup = [
             [
                 Button.url(
-                    "How to Download", "https://telegra.ph/How-to-Download-Movies-05-15"
+                    "How to Download", "https://t.me/how_touvh/7"
                 )
             ],
-            [Button.url("Request Movie", "https://t.me/+VYtz2cF16iVmY2Fl")],
+            [Button.url("Request Movie⚡️", "https://t.me/+VYtz2cF16iVmY2Fl")],
         ]
         await txt.delete()
         result = await event.reply(message, link_preview=False, buttons=markup)
