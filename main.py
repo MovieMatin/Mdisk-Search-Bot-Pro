@@ -14,8 +14,13 @@ import urllib.parse
 from telethon.errors import UserNotParticipantError
 from telethon.tl.functions.channels import GetParticipantRequest
 import re
-tbot = TelegramClient('mdisktelethonbot', Config.API_ID, Config.API_HASH).start(bot_token=Config.BOT_TOKEN)
-client = TelegramClient(StringSession( Config.USER_SESSION_STRING), Config.API_ID, Config.API_HASH)
+
+tbot = TelegramClient("mdisktelethonbot", Config.API_ID, Config.API_HASH).start(
+    bot_token=Config.BOT_TOKEN
+)
+client = TelegramClient(
+    StringSession(Config.USER_SESSION_STRING), Config.API_ID, Config.API_HASH
+)
 
 
 async def get_user_join(id):
@@ -24,7 +29,9 @@ async def get_user_join(id):
 
     ok = True
     try:
-        await tbot(GetParticipantRequest(channel=int(Config.UPDATES_CHANNEL), participant=id))
+        await tbot(
+            GetParticipantRequest(channel=int(Config.UPDATES_CHANNEL), participant=id)
+        )
         ok = True
     except UserNotParticipantError:
         ok = False
@@ -38,18 +45,25 @@ async def message_handler(event):
             return
 
         # if event.is_channel:return
-        if event.text.startswith("/"):return
+        if event.text.startswith("/"):
+            return
 
         print("\n")
         print("Message Received: " + event.text)
 
         # Force Subscription
-        if  not await get_user_join(event.sender_id):
-            haha = await event.reply(f'''**Hey! {event.sender.first_name} 😃**
+        if not await get_user_join(event.sender_id):
+            haha = await event.reply(
+                f"""**Hey! {event.sender.first_name} 😃**
 
 **You Have To Join Our Update Channel To Use Me ✅**
 
-**Click Bellow Button To Join Now.👇🏻**''', buttons=Button.url('🍿Updates Channel🍿', f'https://t.me/{Config.UPDATES_CHANNEL_USERNAME}'))
+**Click Bellow Button To Join Now.👇🏻**""",
+                buttons=Button.url(
+                    "🍿Updates Channel🍿",
+                    f"https://t.me/{Config.UPDATES_CHANNEL_USERNAME}",
+                ),
+            )
             await asyncio.sleep(Config.AUTO_DELETE_TIME)
             return await haha.delete()
 
@@ -64,28 +78,28 @@ async def message_handler(event):
 
         txt = await event.reply('**Searching For "{}" 🔍**'.format(event.text))
 
-
-
         search = []
         if event.is_group or event.is_channel:
             group_info = await db.get_group(str(event.chat_id).replace("-100", ""))
 
-            if group_info["has_access"] and group_info["db_channel"] and await db.is_group_verified(str(event.chat_id).replace("-100", "")):
+            if (
+                group_info["has_access"]
+                and group_info["db_channel"]
+                and await db.is_group_verified(str(event.chat_id).replace("-100", ""))
+            ):
                 CHANNEL_ID = group_info["db_channel"]
             else:
                 CHANNEL_ID = Config.CHANNEL_ID
         else:
             CHANNEL_ID = Config.CHANNEL_ID
 
-
         async for i in AsyncIter(re.sub("__|\*", "", args).split()):
             if len(i) > 2:
-               
                 search_msg = client.iter_messages(CHANNEL_ID, limit=5, search=i)
                 search.append(search_msg)
 
         username = Config.UPDATES_CHANNEL_USERNAME
-        answer = f'**Join** [@{username}](https://telegram.me/{username}) \n\n'
+        answer = f"**Join** [@{username}](https://telegram.me/{username}) \n\n"
 
         c = 0
 
@@ -95,25 +109,33 @@ async def message_handler(event):
                 f_text = re.sub("__|\*", "", msg.text)
 
                 f_text = await link_to_hyperlink(f_text)
-                answer += f'\n\n\n✅ PAGE {c}:\n\n━━━━━━━━━\n\n' + '' + f_text.split("\n", 1)[0] + '' + '\n\n' + '' + f_text.split("\n", 2)[
-                    -1] + "\n\n"
-                
+                answer += (
+                    f"\n\n\n✅ PAGE {c}:\n\n━━━━━━━━━\n\n"
+                    + ""
+                    + f_text.split("\n", 1)[0]
+                    + ""
+                    + "\n\n"
+                    + ""
+                    + f_text.split("\n", 2)[-1]
+                    + "\n\n"
+                )
+
             # break
         finalsearch = []
         async for msg in AsyncIter(search):
             finalsearch.append(msg)
 
         if c <= 0:
-            answer = f'''**No Results Found For {event.text}**
+            answer = f"""Movie Not Found For {event.text} 😞
 
-**Type Only Movie Name 💬**
-**Check Spelling On** [Google](http://www.google.com/search?q={event.text.replace(' ', '%20')}%20Movie) 🔍
-    '''
+Request Your Movie By Clicking Below Button and Movie Will Be Uploaded Soon 😊
+    """
 
-            newbutton = [Button.url('Click To Check Spelling ✅',
-                                    f'http://www.google.com/search?q={event.text.replace(" ", "%20")}%20Movie')], [
-                            Button.url('Click To Check Release Date 📅',
-                                    f'http://www.google.com/search?q={event.text.replace(" ", "%20")}%20Movie%20Release%20Date')]
+            newbutton = (
+                [
+                    [Button.url("Request Movie", "https://t.me/+VYtz2cF16iVmY2Fl")],
+                ],
+            )
             await txt.delete()
             result = await event.reply(answer, buttons=newbutton, link_preview=False)
             await asyncio.sleep(Config.AUTO_DELETE_TIME)
@@ -126,16 +148,21 @@ async def message_handler(event):
         answer = await replace_username(answer)
         html_content = await markdown_to_html(answer)
         html_content = await make_bold(html_content)
-        
+
         tgraph_result = await telegraph_handler(
-            html=html_content,
-            title=event.text,
-            author=Config.BOT_USERNAME
+            html=html_content, title=event.text, author=Config.BOT_USERNAME
         )
         message = f'**Click Here 👇 For "{event.text}"**\n\n[🍿🎬 {str(event.text).upper()}\n🍿🎬 {str("Click me for results").upper()}]({tgraph_result})'
-
+        markup = [
+            [
+                Button.url(
+                    "How to Download", "https://telegra.ph/How-to-Download-Movies-05-15"
+                )
+            ],
+            [Button.url("Request Movie", "https://t.me/+VYtz2cF16iVmY2Fl")],
+        ]
         await txt.delete()
-        result = await event.reply(message, link_preview=False)
+        result = await event.reply(message, link_preview=False, buttons=markup)
         await asyncio.sleep(Config.AUTO_DELETE_TIME)
         # await event.delete()
         return await result.delete()
@@ -145,7 +172,7 @@ async def message_handler(event):
         await txt.delete()
         result = await event.reply("Some error occurred while searching for movie")
         await asyncio.sleep(Config.AUTO_DELETE_TIME)
-        await event.delete() 
+        await event.delete()
         return await result.delete()
 
 
@@ -160,7 +187,7 @@ Bot = Client(
     api_id=Config.API_ID,
     api_hash=Config.API_HASH,
     bot_token=Config.BOT_TOKEN,
-    plugins=dict(root="plugins")
+    plugins=dict(root="plugins"),
 )
 
 print()
@@ -170,13 +197,15 @@ Bot.start()
 
 print("------------------------------------------------------------------")
 print()
-print(f"""
+print(
+    f"""
  _____________________________________________   
 |                                             |  
 |          Deployed Successfully              |  
 |              Join @{Config.UPDATES_CHANNEL_USERNAME}                 |
 |_____________________________________________|
-    """)
+    """
+)
 
 # User.start()
 with tbot, client:
@@ -190,4 +219,6 @@ idle()
 print()
 print("------------------------ Stopped Services ------------------------")
 Bot.stop()
+# User.stop()
+# User.stop()
 # User.stop()
