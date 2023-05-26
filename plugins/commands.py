@@ -59,12 +59,12 @@ Movie channel"""
                     InlineKeyboardButton("Help", callback_data="Help_msg"),
                 ],
                 [
-                    InlineKeyboardButton("K Drama 🎤", url="https://t.me/kdrama1234"),
-                    InlineKeyboardButton("18+", url="https://t.me/Adults_Club"),
+                    InlineKeyboardButton("K Drama 🎭", url="https://t.me/+0PysrdZpm1NkZTRl"),
+                    InlineKeyboardButton("18+ 🤤💦", url="https://t.me/+FuwaJrA-FBhlMGI1"),
                 ],
                 [
-                    InlineKeyboardButton("Anime 🦄", url="https://t.me/Anime_Chatting"),
-                    InlineKeyboardButton("Movie Channel 🎥", url="https://t.me/Movie_Chatting"),
+                    InlineKeyboardButton("Anime & Cartoons 🎃", url="https://t.me/+dFOulwMYXdJmZTFl"),
+                    InlineKeyboardButton("Movie Channel 🍿", url="https://t.me/+dFOulwMYXdJmZTFl"),
                 ]
             ]
         ),
