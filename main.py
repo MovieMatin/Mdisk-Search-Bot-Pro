@@ -131,11 +131,10 @@ async def message_handler(event):
 Request Your Movie By Clicking Below Button and Movie Will Be Uploaded Soon 😊
     """
 
-            newbutton = (
-                [
+            newbutton = [
                     [Button.url("Request Movie⚡️", "https://t.me/+VYtz2cF16iVmY2Fl")],
-                ],
-            )
+                ]
+            
             await txt.delete()
             result = await event.reply(answer, buttons=newbutton, link_preview=False)
             await asyncio.sleep(Config.AUTO_DELETE_TIME)
