@@ -13,7 +13,7 @@ class Config(object):
     BOT_SESSION_NAME = os.getenv("BOT_SESSION_NAME", "Auto_Post_Filter_ProBot")
     USER_SESSION_STRING = os.getenv("USER_SESSION_STRING", "1BVtsOIMBuxDH17lUFFTst4PuPWOhaQ-1SnORtZqxrp_MxdLSUc3yGfmN-Mu2JHXuGLoPCooxMgIrJ-YPuFKgYoJOs1v4dpMhJ8b7p3IDLlpAfeIUo2MOqkQn2TVbJKQ0rD-xcgXkxefa9R3JDN-LYYZUYHTMaeexJOoX8nkCGv2lXohYbiLRsypwEsoXr5uHwNzwwuwlaHB4QDDKu3iPNm8DPNUdzl_wVbRYaRfBr_tzd3v7XEPcel5smR2wAWlbFaTWNcrfDlbH6lsVbfmCxCaLpKSvpBxtxVmhGuMwGTROUFMyBHA9z2tIT-yyrJt6AoOdz8pYJBWfCSMZ_SgJ8TBAqfmLUAY=")
     CHANNEL_ID = int(os.getenv("CHANNEL_ID", "-1001918524825"))
-    BOT_USERNAME = os.getenv("Auto_Post_Filter_ProBot")
+    BOT_USERNAME = os.getenv("BOT_USERNAME", "Auto_Post_Filter_ProBot")
     BOT_OWNER = int(os.getenv("BOT_OWNER", "1963114305"))
 #    OWNER_USERNAME = os.getenv("OWNER_USERNAME")
     BACKUP_CHANNEL = os.getenv("BACKUP_CHANNEL", "Matiz_Techz")
